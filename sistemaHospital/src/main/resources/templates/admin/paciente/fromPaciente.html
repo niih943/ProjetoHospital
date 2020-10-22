@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<title>Hospital - Cadastrar Pacientes</title>
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link href="imagem/favicon.ico" rel="icon">
+	
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	<nav>
+	    <div class="nav-wrapper">
+	    	<div class="container">
+		    	<a href="/" class="brand-logo"><i class="material-icons white-text">local_hospital</i> Hospital</a>
+		    		<ul id="nav-mobile" class="right hide-on-med-and-down">
+				        <li><a href="#" th:href="@{/}">Início</a></li>
+				        <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/sobre}">Sobre</a></li>
+				        
+				        <li sec:authorize="hasRole('USUARIO')"><a href="#" th:href="@{/listarConsulta}">Listar Consultas</a></li>
+				        <li sec:authorize="hasRole('USUARIO')">
+							<!-- 						<a href="#" th:href="@{/logout}">Sair</a> -->
+							<form action="/logout" method="post">
+								<button class="btn" type="submit">Sair</button>
+								<input type="hidden" th:name="${_csrf.parameterName}"
+									th:value="${_csrf.token}" />
+							</form>
+						</li>
+				        
+				        <li sec:authorize="hasRole('ADMIN')"><a href="#"
+						th:href="@{/admin/cadastrarPaciente}">Cadastrar Pacientes</a></li>
+						<li sec:authorize="hasRole('ADMIN')"><a href="#"
+						th:href="@{/admin/pacientes}">Listar Pacientes</a></li>
+						<li sec:authorize="hasRole('ADMIN')"><a href="#"
+						th:href="@{/admin/adicionaPaciente}">Marcar Consulta</a></li>
+				        <li sec:authorize="hasRole('ADMIN')">
+							<!-- 						<a href="#" th:href="@{/logout}">Sair</a> -->
+							<form action="/logout" method="post">
+								<button class="btn" type="submit">Sair</button>
+								<input type="hidden" th:name="${_csrf.parameterName}"
+									th:value="${_csrf.token}" />
+							</form>
+						</li>
+				        
+				        <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/areaAcesso}">Área de Acesso</a></li>
+				    </ul>
+	      	</div>
+	     </div>
+  	</nav>
+  	
+  	<div class="container">
+	  	<div class="row">
+	  		<div class="input-field col 6">
+	  			<h3>Cadastro de Pacientes</h3>
+	  		</div>
+	  		<div class="input-field col 6 right">
+				<h3 sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{/admin/pacientes}" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Listar Pacientes</a></h3>
+			</div>
+		</div>
+		<div class="row">
+			<form action="#" th:action="@{/admin/cadastrarPaciente}" class= "col s12" method="post">
+				<div class="row">
+					<div class="input-field col s12">
+						<label>Nome do Paciente:</label>
+						<input type="text" value="" name="nome"/>
+					</div>
+					<div class="input-field col s2">
+						<label>Idade:</label>
+						<input type="text" value="" name="idade"/>
+				    </div>
+				    <div class="input-field col 3">
+						<label>Sexo:</label>
+						<input type="text" value="" name="sexo"/>
+					</div>
+					<div class="input-field col s4">
+						<label>CPF:</label>
+						<input type="text" value="" name="cpf"/>
+					</div>
+					<div class="input-field col s3">
+						<label>Telefone:</label>
+						<input type="number" value="" name="telefone"/>
+					</div>
+					<div class="input-field col s12">
+						<label>Endereco:</label>
+						<input type="text"  value="" name="endereco"/>
+					</div>
+				</div>
+				<button class="waves-effect waves-light btn" type="submit"><i class="material-icons left">save</i> Cadastrar Paciente</button>
+			</form>
+		</div>
+  	</div>
+  	
+  	<footer class="page-footer">
+    	<div class="container">
+            <div class="row">
+            	<div class="col l6 s12">
+                	<h5 class="white-text"><i class="material-icons white-text">local_hospital</i> Hospital</h5>
+                	<p class="grey-text text-lighten-4">No setor de serviços de saúde, a excelência em serviços é a facilidade do hospital como prestador de serviços de saúde em consenso.</p>
+              	</div>
+              	<div class="col l4 offset-l2 s12">
+                	<h5 class="white-text">Principais Links</h5>
+                	<ul>
+                  		<li><a class="grey-text text-lighten-3" href="/">Início</a></li>
+                  		<li sec:authorize="!isAuthenticated()"><a class="grey-text text-lighten-3" href="/sobre">Sobre</a></li>
+                	</ul>
+              	</div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+          	<div class="container">
+            © 2020 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="/">Hospital</a>
+            </div>
+          </div>
+    </footer>
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
+	
+</body>
+</html>

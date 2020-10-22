@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>Hospital - Listar Consultas</title>
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link href="imagem/favicon.ico" rel="icon">
+	
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+	<nav>
+	    <div class="nav-wrapper">
+	    	<div class="container">
+		    	<a href="/" class="brand-logo"><i class="material-icons white-text">local_hospital</i> Hospital</a>
+		    		<ul id="nav-mobile" class="right hide-on-med-and-down">
+				        <li><a href="#" th:href="@{/}">Início</a></li>
+				        <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/sobre}">Sobre</a></li>
+				        
+				        <li sec:authorize="hasRole('USUARIO')"><a href="#" th:href="@{/user/listarConsulta}">Listar Consultas</a></li>
+				        <li sec:authorize="hasRole('USUARIO')">
+							<!-- 						<a href="#" th:href="@{/logout}">Sair</a> -->
+							<form action="/logout" method="post">
+								<button class="btn" type="submit">Sair</button>
+								<input type="hidden" th:name="${_csrf.parameterName}"
+									th:value="${_csrf.token}" />
+							</form>
+						</li>
+				        
+				        <li sec:authorize="hasRole('ADMIN')"><a href="#"
+						th:href="@{/cadastro}">Cadastrar Pacientes</a></li>
+				        <li sec:authorize="hasRole('ADMIN')"><a href="#"
+						th:href="@{/cadastro}">Listar Pacientes</a></li>
+						<li sec:authorize="hasRole('ADMIN')"><a href="#"
+						th:href="@{/cadastro}">Marcar Consulta</a></li>
+				        <li sec:authorize="hasRole('ADMIN')">
+							<!-- 						<a href="#" th:href="@{/logout}">Sair</a> -->
+							<form action="/logout" method="post">
+								<button class="btn" type="submit">Sair</button>
+								<input type="hidden" th:name="${_csrf.parameterName}"
+									th:value="${_csrf.token}" />
+							</form>
+						</li>
+				        
+				        <li sec:authorize="!isAuthenticated()"><a href="#" th:href="@{/areaAcesso}">Área de Acesso</a></li>
+				    </ul>
+	      	</div>
+	     </div>
+  	</nav>
+  	
+  	<div class="container">
+		<div class="row">
+			<h1>Listar Consultas Marcadas</h1>
+		</div>
+		
+		<div class="row">
+			<table class="highlight">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nome do Paciente</th>
+						<th>Data</th>
+						<th>Hora</th>
+						<th>Sintoma</th>
+						<th>Atendimento</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="consulta : ${consultas}">
+						<td th:text="${consulta.idConsulta}"></td>
+						<td th:text="${consulta.paciente.nome}"></td>
+						<td th:text="${consulta.dtConsulta}"></td>
+						<td th:text="${consulta.horario}"></td>
+						<td th:text="${consulta.sintomas}"></td>
+						<td th:text="${consulta.especialista}"></td>
+						<td class="right-align"><a
+							th:href="@{/user/listarConsulta/{id}(id=${consulta.idConsulta})}"><i
+								class="material-icons">delete</i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+  	
+  	<footer class="page-footer">
+    	<div class="container">
+            <div class="row">
+            	<div class="col l6 s12">
+                	<h5 class="white-text"><i class="material-icons white-text">local_hospital</i> Hospital</h5>
+                	<p class="grey-text text-lighten-4">No setor de serviços de saúde, a excelência em serviços é a facilidade do hospital como prestador de serviços de saúde em consenso.</p>
+              	</div>
+              	<div class="col l4 offset-l2 s12">
+                	<h5 class="white-text">Principais Links</h5>
+                	<ul>
+                  		<li><a class="grey-text text-lighten-3" href="/">Início</a></li>
+                  		<li sec:authorize="!isAuthenticated()"><a class="grey-text text-lighten-3" href="/sobre">Sobre</a></li>
+                	</ul>
+              	</div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+          	<div class="container">
+            © 2020 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="/">Hospital</a>
+            </div>
+          </div>
+    </footer>
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<!-- <script type="text/javascript" src="js/materialize.min.js"></script> -->
+	
+</body>
+</html>
